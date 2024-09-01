@@ -238,7 +238,7 @@ const ChildDashboard = () => {
                                         Today&apos;s Total Requests:
                                     </div>
                                     <div className="text-sm poppins-extrabold">
-                                        12
+                                        {request}
                                     </div>
                                 </div>
                         }

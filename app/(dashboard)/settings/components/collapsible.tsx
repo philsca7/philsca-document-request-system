@@ -11,14 +11,14 @@ import { ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface CollapsibleProps {
-    session: IronSession<SessionData>
+    session: IronSession<SessionData>;
 }
 
 type History = {
     osUsed: string;
     browserUsed: string;
     ipAddress: string;
-    createdAt: number
+    createdAt: number;
 }
 
 const Collapsible: React.FC<CollapsibleProps> = ({
@@ -29,7 +29,6 @@ const Collapsible: React.FC<CollapsibleProps> = ({
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-
         const historyRef = ref(database, `admin/${session.uid}/history`);
 
         const fetchData = (snapshot: any) => {
@@ -39,6 +38,9 @@ const Collapsible: React.FC<CollapsibleProps> = ({
                     id: key,
                     ...userHistoryData[key]
                 }));
+
+                // Sort data by createdAt in descending order
+                userHistoryArray.sort((a, b) => b.createdAt - a.createdAt);
 
                 setData(userHistoryArray);
             }
@@ -50,7 +52,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
             // Unsubscribe from the real-time listener when component unmounts
             onValue(historyRef, fetchData);
         };
-    }, []);
+    }, [session.uid]);
 
     return (
         <Collap
@@ -92,6 +94,9 @@ const Collapsible: React.FC<CollapsibleProps> = ({
                 {data.slice(1).map((item, index) => (
                     <div key={index} className="flex flex-col rounded-md border px-4 py-3 font-mono text-sm">
                         <div>
+                            Ip-Address: {item.ipAddress}
+                        </div>
+                        <div>
                             OS: {item.osUsed}
                         </div>
                         <div>
@@ -104,7 +109,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
                 ))}
             </CollapsibleContent>
         </Collap>
-    )
+    );
 }
 
 export default Collapsible;
