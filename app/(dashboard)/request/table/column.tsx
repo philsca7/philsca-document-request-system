@@ -222,7 +222,7 @@ export const columns: ColumnDef<Request>[] = [
         header: "Payment Status",
         cell: ({ row }) => (
             <div className={`font-semibold text-base text-center ${row.original.payment_image_name ? 'text-green-500' : 'text-yellow-500'}`}>
-                {row.original.payment_image_name ? 'Paid' : 'Unpayed'}
+                {row.original.payment_image_name ? 'Paid' : 'Unpaid'}
             </div>
         ),
     },
